@@ -181,13 +181,6 @@ public class MainActivity extends Activity {
         public void getBuffer(short[] buffer) {
             System.out.println(buffer);
             tensorFlowUtil.add(buffer);
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//
-//                }
-//            }).start();
-
         }
 
         @Override

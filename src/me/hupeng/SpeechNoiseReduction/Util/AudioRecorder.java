@@ -35,8 +35,9 @@ public class AudioRecorder {
             AudioFormat.CHANNEL_IN_DEFAULT, AudioFormat.ENCODING_PCM_16BIT);
     //static final int BUFFER_SIZE = 1024;
     AudioRecord mAudioRecord;
-    public boolean isGetVoiceRun;
+    public boolean isGetVoiceRun = true;
     private boolean isPause = false;
+
     Object mLock;
 
 
@@ -126,6 +127,7 @@ public class AudioRecorder {
         isGetVoiceRun = false;
         recordFileUtil.stopWriteBuffer();
         recordFileName = recordFileUtil.getFileName();
+        isGetVoiceRun = true;
     }
 
 
