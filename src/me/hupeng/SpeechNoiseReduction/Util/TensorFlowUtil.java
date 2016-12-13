@@ -31,4 +31,8 @@ public class TensorFlowUtil {
     public void setMinaUtil(MinaUtil minaUtil){
         this.minaUtil = minaUtil;
     }
+
+    public TensorFlowUtil(MinaUtil minaUtil){
+        setMinaUtil(minaUtil);
+    }
 }

@@ -26,22 +26,7 @@ public class WelcomeActivity extends Activity {
 
     private void initial(){
         MinaUtil minaUtil = MinaUtil.getInstance(false, Config.tensorFlowHost);
-        minaUtil.setSimpleListener(new SimpleMinaListener() {
-            @Override
-            public void onReceive(Object obj, IoSession ioSession) {
-                Log.i("SNR:MinaUtil","收到消息");
-            }
 
-            @Override
-            public void onLine(String msg) {
-
-            }
-
-            @Override
-            public void offLine() {
-
-            }
-        });
     }
 
     @Override

@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import android.widget.Toast;
+import me.hupeng.SpeechNoiseReduction.Util.Config;
+import me.hupeng.SpeechNoiseReduction.Util.TensorFlowUtil;
 import org.apache.mina.core.session.IoSession;
 
 import me.hupeng.SpeechNoiseReduction.Listener.AudioListener;
@@ -33,6 +35,9 @@ public class MainActivity extends Activity {
     private AudioRecorder audioRecorder = new AudioRecorder((int)(System.currentTimeMillis() / 1000));
 
     private ImageView light1;
+
+    private MinaUtil minaUtil = null;
+    private TensorFlowUtil tensorFlowUtil = null;
     /**
      * 初始化控件以及变量
      * */
@@ -49,12 +54,26 @@ public class MainActivity extends Activity {
         for (int i =  0 ; i < 320 ; i++){
             data[i] = i;
         }
-        MyData myData = new MyData();
-        myData.data = data;
-        minaUtil.send(myData);
-        minaUtil.send(myData);
-        minaUtil.send(myData);
-        minaUtil.send(myData);minaUtil.send(myData);
+
+        MinaUtil minaUtil1 = MinaUtil.getInstance(false, Config.tensorFlowHost);
+        minaUtil.setSimpleListener(new SimpleMinaListener() {
+            @Override
+            public void onReceive(Object obj, IoSession ioSession) {
+
+            }
+
+            @Override
+            public void onLine(String msg) {
+
+            }
+
+            @Override
+            public void offLine() {
+
+            }
+        });
+        tensorFlowUtil = new TensorFlowUtil(minaUtil);
+
 
         new Thread(new Runnable() {
             @Override
@@ -167,7 +186,7 @@ public class MainActivity extends Activity {
 
         @Override
         public void getBuffer(short[] buffer) {
-
+            tensorFlowUtil.add(buffer);
         }
 
         @Override
