@@ -1,6 +1,7 @@
 package me.hupeng.SpeechNoiseReduction.mina;
 
 
+import me.hupeng.SpeechNoiseReduction.Util.Config;
 import org.apache.mina.core.future.ConnectFuture;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
@@ -102,9 +103,9 @@ public class MinaUtil {
                             connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new MyImageFactory()));
                             ConnectFuture future;
                             if (serverAddr != null){
-                                future = connector.connect(new InetSocketAddress(serverAddr, 9999));
+                                future = connector.connect(new InetSocketAddress(serverAddr, Config.port));
                             }else {
-                                future = connector.connect(new InetSocketAddress("192.168.43.1", 9999));
+                                future = connector.connect(new InetSocketAddress("192.168.43.1", Config.port));
                             }
 
                             future.awaitUninterruptibly();

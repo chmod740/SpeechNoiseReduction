@@ -172,7 +172,9 @@ public class MainActivity extends Activity {
         }
     }
 
-    private short[] buffer;
+
+
+
 
 
 
@@ -180,7 +182,7 @@ public class MainActivity extends Activity {
 
         @Override
         public void getBuffer(short[] buffer) {
-            System.out.println(buffer);
+
         }
 
         @Override
