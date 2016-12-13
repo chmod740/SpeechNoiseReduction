@@ -10,11 +10,12 @@ import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
 
+import java.io.Serializable;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MinaUtil {
+public class MinaUtil implements Serializable{
     /**
      * 客户端用：
      * 服务器IP地址
@@ -67,20 +68,18 @@ public class MinaUtil {
         public Object message;
     }
 
-    public static MinaUtil getInstance(SimpleMinaListener simpleListener, Boolean isServer, String serverAddr){
+    public static MinaUtil getInstance( Boolean isServer, String serverAddr){
         if (isServer){
             if (minaUtilServer == null){
-                minaUtilServer = new MinaUtil(simpleListener,isServer,null);
+                minaUtilServer = new MinaUtil(isServer,null);
             }
             return minaUtilServer;
         }else {
             if (minaUtilClient == null){
-                minaUtilClient = new MinaUtil(simpleListener,isServer,serverAddr);
+                minaUtilClient = new MinaUtil(isServer,serverAddr);
             }
             return minaUtilClient;
         }
-
-
     }
 
 
@@ -88,9 +87,8 @@ public class MinaUtil {
     /**
      * 实现单例模式，私有构造函数
      * */
-    private MinaUtil(SimpleMinaListener simpleListener, Boolean isServer, String serverAddr){
+    private MinaUtil( Boolean isServer, String serverAddr){
         this.isServer = isServer;
-        this.simpleListener = simpleListener;
         this.serverAddr = serverAddr;
         if (!isServer) {
             new Thread(new Runnable() {
@@ -229,8 +227,8 @@ public class MinaUtil {
         public void messageReceived(IoSession session, Object message)
                 throws Exception {
 
-
-            simpleListener.onReceive(message,session);
+            if (simpleListener != null)
+                simpleListener.onReceive(message,session);
             System.out.println(session.getId());
             System.out.println("messageReceived");
         }
@@ -241,7 +239,8 @@ public class MinaUtil {
         }
 
         public void sessionClosed(IoSession session) throws Exception {
-            simpleListener.offLine();
+            if (simpleListener != null)
+                simpleListener.offLine();
             System.out.println(session.getId());
             System.out.println("sessionClosed");
             MinaUtil.this.session = null;
@@ -311,7 +310,10 @@ public class MinaUtil {
             System.out.println(session.getId());
             System.out.println("messageReceived");
             System.out.println(message);
-            simpleListener.onReceive(message,session);
+            if (simpleListener!=null){
+                simpleListener.onReceive(message,session);
+            }
+
         }
 
         public void messageSent(IoSession session, Object message) throws Exception {
@@ -320,7 +322,10 @@ public class MinaUtil {
         }
 
         public void sessionClosed(IoSession session) throws Exception {
-            simpleListener.offLine();
+            if (simpleListener!=null){
+                simpleListener.offLine();
+            }
+
             System.out.println(session.getId());
             System.out.println("sessionClosed");
             sessions.remove(session);
@@ -343,7 +348,14 @@ public class MinaUtil {
         public void sessionOpened(IoSession session) throws Exception {
             System.out.println(session.getId());
             System.out.println("sessionOpened");
-            simpleListener.onLine("对方玩家("+ session.getRemoteAddress().toString().replaceAll("/","") +")已上线");
+            if (simpleListener!=null){
+                simpleListener.onLine("对方玩家("+ session.getRemoteAddress().toString().replaceAll("/","") +")已上线");
+            }
+
         }
+    }
+
+    public void setSimpleListener(SimpleMinaListener simpleListener){
+        this.simpleListener = simpleListener;
     }
 }

@@ -44,22 +44,7 @@ public class MainActivity extends Activity {
 
         audioRecorder.setListener(new MyAudioListener());
 
-        MinaUtil minaUtil = MinaUtil.getInstance(new SimpleMinaListener() {
-            @Override
-            public void onReceive(Object obj, IoSession ioSession) {
-
-            }
-
-            @Override
-            public void onLine(String msg) {
-
-            }
-
-            @Override
-            public void offLine() {
-
-            }
-        },false,"183.175.12.163");
+        MinaUtil minaUtil = MinaUtil.getInstance(false,"183.175.12.163");
         int data [] = new int[320];
         for (int i =  0 ; i < 320 ; i++){
             data[i] = i;

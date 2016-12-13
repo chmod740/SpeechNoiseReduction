@@ -1,5 +1,7 @@
 package me.hupeng.SpeechNoiseReduction.Util;
 
+import me.hupeng.SpeechNoiseReduction.mina.MinaUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +11,24 @@ import java.util.List;
 public class TensorFlowUtil {
     private List<Short>list = new ArrayList<>();
 
-    public synchronized void add(short[] buffer){
+    private MinaUtil minaUtil = null;
 
+    public synchronized void add(short[] buffer){
+        for (int i = 0 ; i < buffer.length ; i ++){
+            list.add(buffer[i]);
+        }
+        String tmp= "";
+        while(list.size() > 600){
+            for (int i =  0; i < 600 ; i ++ ){
+                tmp = tmp + " " + i;
+            }
+        }
+        if (minaUtil != null){
+            minaUtil.send(tmp);
+        }
+    }
+
+    public void setMinaUtil(MinaUtil minaUtil){
+        this.minaUtil = minaUtil;
     }
 }
