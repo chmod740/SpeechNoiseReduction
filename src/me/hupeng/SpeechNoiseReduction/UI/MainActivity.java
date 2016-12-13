@@ -186,11 +186,20 @@ public class MainActivity extends Activity {
 
         @Override
         public void getBuffer(short[] buffer) {
-            tensorFlowUtil.add(buffer);
+            System.out.println(buffer);
+
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    tensorFlowUtil.add(buffer);
+//                }
+//            }).start();
+
         }
 
         @Override
         public void getDB(double v) {
+
             System.out.println(v);
             int lightLevel = (int)((v/100*254))>254?254:((int)(v/100*254));
             Message message = new Message();
