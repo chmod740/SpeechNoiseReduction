@@ -10,6 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import me.hupeng.SpeechNoiseReduction.R;
+import me.hupeng.SpeechNoiseReduction.mina.MinaUtil;
 
 /**
  * Created by hupeng on 11/27/16.
@@ -17,6 +18,10 @@ import me.hupeng.SpeechNoiseReduction.R;
 
 public class WelcomeActivity extends Activity {
 
+
+    private void initial(){
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
