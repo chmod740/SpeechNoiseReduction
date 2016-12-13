@@ -10,7 +10,7 @@ import java.util.List;
  * Created by hupeng on 11/27/16.
  */
 
-public class TensorFlowImageClassifier implements Classifier {
+public class  TensorFlowImageClassifier implements Classifier {
 
 
     private TensorFlowInferenceInterface tensorFlowInferenceInterface;

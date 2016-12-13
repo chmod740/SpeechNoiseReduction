@@ -14,6 +14,7 @@ public class TensorFlowUtil {
     private MinaUtil minaUtil = null;
 
     public synchronized void add(short[] buffer){
+//        list.addAll(java.util.Arrays.asList(buffer));
         for (int i = 0 ; i < buffer.length ; i ++){
             list.add(buffer[i]);
         }

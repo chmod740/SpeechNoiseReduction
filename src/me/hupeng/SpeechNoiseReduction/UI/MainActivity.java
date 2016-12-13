@@ -75,14 +75,7 @@ public class MainActivity extends Activity {
         tensorFlowUtil = new TensorFlowUtil(minaUtil);
 
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(true){
 
-                }
-            }
-        }).start();
     }
 
     /**
@@ -187,11 +180,11 @@ public class MainActivity extends Activity {
         @Override
         public void getBuffer(short[] buffer) {
             System.out.println(buffer);
-
+            tensorFlowUtil.add(buffer);
 //            new Thread(new Runnable() {
 //                @Override
 //                public void run() {
-//                    tensorFlowUtil.add(buffer);
+//
 //                }
 //            }).start();
 
@@ -241,7 +234,7 @@ public class MainActivity extends Activity {
         brightness = brightness>255?255:brightness;
         light1.getBackground().setAlpha(brightness);
 
-        Log.i("info*******",brightness + "");
+//        Log.i("info*******",brightness + "");
     }
 
 
