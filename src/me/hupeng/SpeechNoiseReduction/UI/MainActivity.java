@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,7 +17,7 @@ import me.hupeng.SpeechNoiseReduction.Listener.AudioListener;
 import me.hupeng.SpeechNoiseReduction.R;
 import me.hupeng.SpeechNoiseReduction.Util.AudioRecorder;
 import me.hupeng.SpeechNoiseReduction.mina.MinaUtil;
-import me.hupeng.SpeechNoiseReduction.mina.MyData;
+
 import me.hupeng.SpeechNoiseReduction.mina.SimpleMinaListener;
 
 public class MainActivity extends Activity {
@@ -168,10 +167,6 @@ public class MainActivity extends Activity {
             }
         }
     }
-
-
-
-
 
 
 

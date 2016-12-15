@@ -35,7 +35,7 @@ public class AudioRecorder {
             AudioFormat.CHANNEL_IN_DEFAULT, AudioFormat.ENCODING_PCM_16BIT);
     //static final int BUFFER_SIZE = 1024;
     AudioRecord mAudioRecord;
-    public boolean isGetVoiceRun = true;
+    public boolean isGetVoiceRun = false;
     private boolean isPause = false;
 
     Object mLock;
@@ -66,6 +66,7 @@ public class AudioRecorder {
             Log.e(TAG, "还在录着呢");
             return;
         }
+
         mAudioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC,
                 SAMPLE_RATE_IN_HZ, AudioFormat.CHANNEL_IN_DEFAULT,
                 AudioFormat.ENCODING_PCM_16BIT, BUFFER_SIZE);
@@ -124,10 +125,10 @@ public class AudioRecorder {
 
 
     public void stopRecord(){
-        isGetVoiceRun = false;
+        //isGetVoiceRun = false;
         recordFileUtil.stopWriteBuffer();
         recordFileName = recordFileUtil.getFileName();
-        isGetVoiceRun = true;
+        isGetVoiceRun = false;
     }
 
 

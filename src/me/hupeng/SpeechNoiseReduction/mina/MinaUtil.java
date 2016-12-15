@@ -7,11 +7,13 @@ import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
+import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
 
 import java.io.Serializable;
 import java.net.InetSocketAddress;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,7 +100,12 @@ public class MinaUtil implements Serializable{
                         try {
                             NioSocketConnector connector = new NioSocketConnector();
                             connector.setHandler(new MyClientHandler());
-                            connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new MyImageFactory()));
+
+                            TextLineCodecFactory lineCodec=new TextLineCodecFactory(Charset.forName("UTF-8"));
+                            lineCodec.setDecoderMaxLineLength(1024*1024); //1M
+                            lineCodec.setEncoderMaxLineLength(1024*1024); //1M
+
+                            connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(lineCodec));
                             ConnectFuture future;
                             if (serverAddr != null){
                                 future = connector.connect(new InetSocketAddress(serverAddr, Config.port));
@@ -229,12 +236,12 @@ public class MinaUtil implements Serializable{
 
             if (simpleListener != null)
                 simpleListener.onReceive(message,session);
-            System.out.println(session.getId());
-            System.out.println("messageReceived");
+            System.out.println("reveice:" + message);
         }
 
         public void messageSent(IoSession session, Object message) throws Exception {
             System.out.println(session.getId());
+            System.out.println(message);
             System.out.println("messageSent");
         }
 
@@ -313,7 +320,7 @@ public class MinaUtil implements Serializable{
             if (simpleListener!=null){
                 simpleListener.onReceive(message,session);
             }
-
+            System.out.println("reveice:" + message);
         }
 
         public void messageSent(IoSession session, Object message) throws Exception {
