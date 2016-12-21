@@ -84,7 +84,13 @@ public class MinaUtil implements Serializable{
         }
     }
 
-
+    public static MinaUtil getInstance(){
+        if (minaUtilClient!=null)
+            return minaUtilClient;
+        if (minaUtilServer!=null)
+            return minaUtilServer;
+        return null;
+    }
 
     /**
      * 实现单例模式，私有构造函数

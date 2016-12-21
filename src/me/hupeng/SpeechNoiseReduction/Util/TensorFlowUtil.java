@@ -15,7 +15,7 @@ public class TensorFlowUtil  {
 
     private MinaUtil minaUtil = null;
 
-    public  void add(short[] buffer){
+    public  void addToNet(short[] buffer){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -59,6 +59,14 @@ public class TensorFlowUtil  {
         setMinaUtil(minaUtil);
     }
 
+    public TensorFlowUtil(){
 
+    }
 
+    /**
+     * 添加到本地处理
+     * */
+    public void addToLocal(short[] buffer){
+
+    }
 }

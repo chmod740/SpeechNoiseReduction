@@ -48,13 +48,13 @@ public class MainActivity extends Activity {
 
         audioRecorder.setListener(new MyAudioListener());
 
-        MinaUtil minaUtil = MinaUtil.getInstance(false,"183.175.12.163");
+
         int data [] = new int[320];
         for (int i =  0 ; i < 320 ; i++){
             data[i] = i;
         }
 
-        MinaUtil minaUtil1 = MinaUtil.getInstance(false, Config.tensorFlowHost);
+
         minaUtil.setSimpleListener(new SimpleMinaListener() {
             @Override
             public void onReceive(Object obj, IoSession ioSession) {
@@ -71,8 +71,12 @@ public class MainActivity extends Activity {
 
             }
         });
-        tensorFlowUtil = new TensorFlowUtil(minaUtil);
 
+
+        if (Config.isUseNetWork){
+            minaUtil = MinaUtil.getInstance();
+            tensorFlowUtil = new TensorFlowUtil(minaUtil);
+        }
 
 
     }
@@ -169,13 +173,21 @@ public class MainActivity extends Activity {
     }
 
 
-
+    /**
+     * 来自录音进程类的回调，返回一个Buffer信息，分贝以及强度的信息。
+     * */
     class MyAudioListener implements AudioListener{
 
         @Override
         public void getBuffer(short[] buffer) {
-            System.out.println(buffer);
-            tensorFlowUtil.add(buffer);
+            //System.out.println(buffer);
+
+            if (Config.isUseNetWork){
+                tensorFlowUtil.addToNet(buffer);
+            }else {
+                tensorFlowUtil.addToLocal(buffer);
+            }
+
         }
 
         @Override

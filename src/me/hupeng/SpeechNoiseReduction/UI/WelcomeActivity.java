@@ -23,9 +23,12 @@ import org.apache.mina.core.session.IoSession;
 
 public class WelcomeActivity extends Activity {
 
-
     private void initial(){
-        MinaUtil minaUtil = MinaUtil.getInstance(false, Config.tensorFlowHost);
+        //如果需要使用网络，从此处开始加载网络通信模块
+        if (Config.isUseNetWork){
+            MinaUtil minaUtil = MinaUtil.getInstance(false, Config.tensorFlowHost);
+        }
+
     }
 
     @Override
